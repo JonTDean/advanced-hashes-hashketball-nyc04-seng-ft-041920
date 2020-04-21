@@ -3,7 +3,7 @@ def game_hash
   {
     home: {
       team_name: "Brooklyn Nets",
-      colors: ["Black", "White"],
+      colors: %w[Black White],
       players: [
         {
           player_name: "Alan Anderson",
@@ -64,7 +64,7 @@ def game_hash
     },
     away: {
       team_name: "Charlotte Hornets",
-      colors: ["Turquoise", "Purple"],
+      colors: %w[Turquoise Purple],
       players: [
         {
           player_name: "Jeff Adrien",
@@ -126,4 +126,146 @@ def game_hash
   }
 end
 
-# Write code here
+# Write code here, I need to put everything below in classes it's disgusting to look at
+
+# Points Scored function
+def num_points_scored(compare_playerName)
+  # Home Team map function
+  game_hash[:home][:players].map do |player|
+    return player[:points] if compare_playerName == player[:player_name]
+  end
+
+  # Away Team Map function ^ Combine the two to reduce abstraction
+  game_hash[:away][:players].map do |player|
+    return player[:points] if compare_playerName == player[:player_name]
+  end
+end
+
+# Shoe Size function
+def shoe_size(compare_playerName)
+  # Home Team map function
+  game_hash[:home][:players].map do |player|
+    return player[:shoe] if compare_playerName == player[:player_name]
+  end
+
+  # Away Team Map function ^ Combine the two to reduce abstraction
+  game_hash[:away][:players].map do |player|
+    return player[:shoe] if compare_playerName == player[:player_name]
+  end
+end
+
+#Team Colors function
+def team_colors(compare_teamName)
+  # Home Team Colors fetch statement
+  return game_hash[:home][:colors] if compare_teamName == game_hash[:home][:team_name]
+
+  # Away Team Colors fetch statement
+  return game_hash[:away][:colors] if compare_teamName == game_hash[:away][:team_name]
+end
+
+#Team Names function ALWAYS CHECK YOUR DAMN FUNCTION NAMES JONNY
+def team_names
+  array_teamNames = []
+  #Team Names Grabbers
+  game_hash.each do |teamNames, teamKeys|
+    array_teamNames << teamKeys[:team_name]
+  end
+
+  array_teamNames
+end
+
+# #Team Names function
+# def team_names
+#   array_teamNames = []
+
+#   #Team Names Grabbers
+#     game_hash.each do |t, teamNameFinder|
+#       # puts teamNameFinder
+#       if teamNameFinder == game_hash[:home] || teamNameFinder == game_hash[:away]
+#         array_teamNames << teamNameFinder[:team_name]
+#       end
+
+#     end
+
+#   return array_teamNames
+# end
+
+# Points Scored function
+def player_numbers(compare_playerName)
+  # Home Team map function
+  game_hash[:home][:players].map do |player|
+    return player[:number] if compare_playerName == player[:player_name]
+  end
+
+  # Away Team Map function ^ Combine the two to reduce abstraction
+  game_hash[:away][:players].map do |player|
+    return player[:number] if compare_playerName == player[:player_name]
+  end
+end
+
+# Team Numbers Function
+def player_numbers(compare_playerTeam)
+  teamNumbers = []
+
+  #Team Names Grabbers
+  game_hash.each do |t, teamNameFinder|
+    if teamNameFinder[:team_name] == compare_playerTeam
+      teamNameFinder[:players].each do |p, players|
+        teamNumbers << p[:number]
+      end
+    end
+  end
+
+  return teamNumbers
+end
+
+# Player Stats Function
+def player_stats(compare_playerName)
+    # Home Team map function
+  game_hash[:home][:players].map do |player|
+    return player if compare_playerName == player[:player_name]
+  end
+
+  # Away Team Map function ^ Combine the two to reduce abstraction
+  game_hash[:away][:players].map do |player|
+    return player if compare_playerName == player[:player_name]
+  end
+end
+
+# Big Shoe Rebounds Function
+def big_shoe_rebounds
+  # playerShoeSort
+  game_hash.each do |tKey, team|
+    team[:players].each do |pKey, players|
+      # puts pKey[:shoe]
+      if pKey[:shoe] == playerShoeSort
+        return pKey[:rebounds]
+      end
+    end
+  end
+end
+
+# Shoe Sort Function Need to Abstract 
+def playerShoeSort
+  playerCollection = []
+  shoeSize = []
+
+  # Shovel All Players into an array
+  game_hash.each do |tKey, team|
+    team[:players].each do |pKey, players|
+      playerCollection  << pKey
+    end
+  end
+
+  # Iterate over each shoe size and sort by highest value
+  i = 0
+  while shoeSize.length < playerCollection.length
+    shoeSize << playerCollection[i][:shoe]
+    i += 1
+  end
+
+  # Sort Shoe Sizes
+  sortedShoeSize = shoeSize.sort.reverse
+
+  return sortedShoeSize[0]
+end
