@@ -3,7 +3,7 @@ def game_hash
   {
     home: {
       team_name: "Brooklyn Nets",
-      colors: %w[Black White],
+      colors: ['Black', 'White'],
       players: [
         {
           player_name: "Alan Anderson",
@@ -125,6 +125,13 @@ def game_hash
     }
   }
 end
+
+# Brute Force 
+game_hash[:home]
+game_hash[:home][:colors][0] # Gets the string "black" from the array
+game_hash[:home][:colors][1] # Gets the string "black" from the array
+
+game_hash.each do |
 
 # Write code here, I need to put everything below in classes it's disgusting to look at
 
